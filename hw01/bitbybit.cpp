@@ -14,8 +14,6 @@ g++ bitbybit.cpp maxmin.cpp -o bitbybit.exe && ./bitbybit.exe
 
 #include <cstdio>
 #include "maxmin.h"  //max,min methods
-#define fpp(b) for (i = 0; i < b; i++)
-#define fmm(b) for (i = b - 1; i >= 0; i--)
 
 int main(int argc, char** argv) {
   int n, res;
@@ -24,11 +22,10 @@ int main(int argc, char** argv) {
   printf("Number of Instructions:");
   res = scanf("%d", &n);  // number of instructions
   while (n != 0) {        // exit if 0
-    int i;                // index - for
     int pos1, pos2;       // bit index for instr
     int bits[32];         // 32 bit reg. //code: 0=0,?=1,1=2
-    fpp(32) bits[i] = 1;  // set all: ?
-    fpp(n) {
+    for (int i = 0; i < 32; i++) bits[i] = 1;  // set all: ?
+    for (int i = 0; i < n; i++) {
       char str[5];  // instr name
       printf("Instruction:");
       res = scanf("%s", str);  // instr name
@@ -53,7 +50,9 @@ int main(int argc, char** argv) {
 
     // OUTPUT
     printf("Register: ");
-    fmm(32) { printf("%c", bits[i] != 1 ? (bits[i] == 2 ? '1' : '0') : '?'); }
+    for (int i = 31; i >= 0; i--) {
+      printf("%c", bits[i] != 1 ? (bits[i] == 2 ? '1' : '0') : '?');
+    }
     printf("\n");
 
     // RESTART
