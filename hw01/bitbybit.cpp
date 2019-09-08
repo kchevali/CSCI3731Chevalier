@@ -6,10 +6,6 @@ Homework 1
 
 Problem Description: https://open.kattis.com/problems/bitbybit
 Status: Accepted @ 0.00s
-
-Compile & Run:
-cd "/Users/kevin/Documents/Repos/CSCI3731Chevalier/hw01/"
-g++ bitbybit.cpp maxmin.cpp -o bitbybit.exe && ./bitbybit.exe
 */
 
 #include <cstdio>

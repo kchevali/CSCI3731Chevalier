@@ -8,3 +8,5 @@
 .vscode/settings.json
 
 *.o
+
+hw02/num.txt
