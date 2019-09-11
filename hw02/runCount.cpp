@@ -9,17 +9,18 @@ Homework 2
 #include <cstdio>
 
 int main(int argc, char **argv) {
-  int ch = 0, num = 0;
+  int num = 1;                         // default output
   FILE *file = fopen("num.txt", "r");  // read only file
   if (file) {                          // found file
-    // scan for digits and build number
-    while ((ch = getc(file)) >= '0' && ch <= '9') num = num * 10 + ch - '0';
-    fclose(file);  // close
+    fscanf(file, "%d", &num);
+    num = num < 1 ? 1 : num;  // ensures no shenanigans
+    fclose(file);
   }
-  printf("%d\n", ++num);  // inc and print num
+  printf("%d\n", num);
+
+  // open file and check if exists
   if ((file = fopen("num.txt", "w")) == NULL) return 1;
-  // open to file and check file exists
-  fprintf(file, "%d", num);  // overwrite
-  fclose(file);              // close
+  fprintf(file, "%d", num + 1);  // overwrite with inc value
+  fclose(file);
   return 0;
 }
