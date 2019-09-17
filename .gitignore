@@ -10,3 +10,5 @@
 *.o
 
 hw02/num.txt
+
+hw03/output.ppm
