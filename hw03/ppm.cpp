@@ -25,6 +25,7 @@ void writePPM(const char* fileName, const unsigned char* pixels,
               const int width, const int height, const int maxPixel) {
   FILE* ptr;
   if ((ptr = fopen(fileName, "wb")) == NULL) return;
+  fprintf(ptr, "P6\n%d %d\n%d\n", width, height, maxPixel);
   fwrite(pixels, sizeof(pixels), height * width * 3, ptr);
   fclose(ptr);
 }
