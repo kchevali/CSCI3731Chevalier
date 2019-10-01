@@ -15,7 +15,7 @@ unsigned char* readPPM(const char* fileName, int* width, int* height,
   // number of byte values
   const int length = *width * *height * 3;
   unsigned char* pixels = new unsigned char[length];  // create pixels in heap
-  fread(pixels, sizeof(pixels), length, ptr);         // read file
+  fread(pixels, sizeof(*pixels), length, ptr);        // read file
   fclose(ptr);
   return pixels;
 }
@@ -26,7 +26,7 @@ void writePPM(const char* fileName, const unsigned char* pixels,
   FILE* ptr;
   if ((ptr = fopen(fileName, "wb")) == NULL) return;
   fprintf(ptr, "P6\n%d %d\n%d\n", width, height, maxPixel);
-  fwrite(pixels, sizeof(pixels), height * width * 3, ptr);
+  fwrite(pixels, sizeof(*pixels), height * width * 3, ptr);
   fclose(ptr);
 }
 
