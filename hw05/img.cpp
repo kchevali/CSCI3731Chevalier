@@ -178,6 +178,7 @@ void flipVertical(int** pixels, const int width, const int height) {
   }
 }
 
+// Rotate image to new array
 int** rotate(int** pixels, int* width, int* height) {
   int** rotPixels = create2DArray(*height, *width);
   for (int i = 0; i < *height; i++) {

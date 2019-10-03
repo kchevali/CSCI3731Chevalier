@@ -1,0 +1,7 @@
+Kevin Chevalier
+HW5 Short Answers
+
+1. What are libraries good for?
+    Libraries are good for faster programming and more concise code. Libraries promotes convenience, higher level programming and focus on the more important elements of your program.
+2. What are the two types of library and how are they different?
+    The first type of library is a static library, which becomes part of the executable during compile time. This method tends to produce larger executables, but avoids compatability issues with updating library files. The second type is a shared object library, which is separate from the executable until it is loaded at runtime. This allows executables to be smaller and reusable for several. However, issues may arise if the library files are modified/updated.
