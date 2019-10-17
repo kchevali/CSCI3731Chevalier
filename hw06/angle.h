@@ -32,11 +32,11 @@ class Angle {
 
   virtual ~Angle();
   friend std::ostream& operator<<(std::ostream& out, const Angle& c);
-  double value;
 
  private:
   double EPS = 10e-6;
   Angle& self();
+  double value;
 };
 
 #endif

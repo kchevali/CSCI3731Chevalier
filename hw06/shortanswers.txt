@@ -1,0 +1,60 @@
+Kevin Chevalier
+HW5 Short Answers
+
+1. What is wrong with the following code and how would you fix it?
+    #ifndef PROJECTILE_H
+    #define PROJECTILE_H
+
+    class Projectile {
+        private:
+            double position;
+            double velocity;
+        public:
+            Projectile(double position, double velocity);
+            virtual ~Projectile();
+            double getPosition() const;
+            double getVelocity() const;
+    }; // end of Projecile class
+    #endif
+
+2. The following is the definition of the constructor for the Projectile class above, but there are
+three things wrong with it. What are they and how would you fix them?
+
+Projectile(const double position, const double velocity) {
+    this->position = position;
+    this->velocity = velocity;
+} // end of constructor
+
+3. Describe each of the following methods
+    (a) int* method(int* arg);
+        
+        a method that accepts an int pointer and returns an int pointer
+
+    (b) const int* method(int* arg);
+        
+        a method that accepts an int pointer and returns a pointer to a const int
+
+    (c) const int* const method(int* arg);
+
+        a method that accepts an int pointer and returns a const pointer to a const int
+
+    (d) const int* const method(const int* arg);
+
+        a method that accepts a pointer to a const int and returns a pointer to a const int
+
+    (e) const int* const method(const int* arg) const;
+
+        a const method that accepts a pointer to a const int and returns a pointer to a const int
+
+4. In what ways are C++ strings better than C strings? In what ways are C strings better than C++ strings?
+
+    The advantage of C++ strings are that they track the length of string. Also C string do not track the boundaries of the string. C++ strings are dynamic and can change length. C++ strings have many useful easy to use methods.
+
+    The advantage of C strings are that they are more efficient, since they are simpler. C strings are compatible with certain methods such as the prinf() method. C strings also conserve more memory.
+
+5. What is the difference between a pointer and a reference?
+
+    A pointer is from C and reference is from C++. Both are variables that store a memory location, but a reference automatically deferences when used, therefore making them easier to use. Pointers have the advantage of pointing to different things but introduces the potential for bugs. A pointer can point to null, while a reference cannot.
+
+6. What is a destructor for?
+    A destructor is used when the object is being destroyed. This method can be used to clear any data in the heap that may be allocated.

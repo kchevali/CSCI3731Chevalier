@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
   Image canvas(fileName, 500, 500, 0);
 
   // drawing triangles with length 8
-  const int length = 8;
+  const int length = 7;
   const int sides = 3;
   Shape shape(0, 0, sides, length, 0);
 
