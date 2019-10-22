@@ -10,56 +10,50 @@ Angle::Angle(double value) {
 }
 
 // basic operators
-Angle Angle::operator+(const double value) const {
+Angle Angle::operator+(double value) const {
   return Angle(this->value + value);
 }
-Angle Angle::operator-(const double value) const {
+Angle Angle::operator-(double value) const {
   return Angle(this->value - value);
 }
-Angle& Angle::operator+=(const double value) {
+Angle& Angle::operator+=(double value) {
   this->value += value;
   return self();
 }
-Angle& Angle::operator-=(const double value) {
+Angle& Angle::operator-=(double value) {
   this->value -= value;
   return self();
 }
 
-Angle Angle::operator*(const double value) const {
+Angle Angle::operator*(double value) const {
   return Angle(this->value * value);
 }
-Angle Angle::operator/(const double value) const {
+Angle Angle::operator/(double value) const {
   return Angle(this->value / value);
 }
-Angle& Angle::operator*=(const double value) {
+Angle& Angle::operator*=(double value) {
   this->value *= value;
   return self();
 }
-Angle& Angle::operator/=(const double value) {
+Angle& Angle::operator/=(double value) {
   this->value /= value;
   return self();
 }
-Angle& Angle::operator=(const double value) {
+Angle& Angle::operator=(double value) {
   this->value = value;
   return self();
 }
 
 // comparative operators
-bool Angle::operator==(const double value) const {
+bool Angle::operator==(double value) const {
   return fabs(this->value - value) < EPS;
 }
-bool Angle::operator>=(const double value) const {
+bool Angle::operator>=(double value) const {
   return this->value - value > -EPS;
 }
-bool Angle::operator<=(const double value) const {
-  return this->value - value < EPS;
-}
-bool Angle::operator>(const double value) const {
-  return this->value - value > EPS;
-}
-bool Angle::operator<(const double value) const {
-  return this->value - value < -EPS;
-}
+bool Angle::operator<=(double value) const { return this->value - value < EPS; }
+bool Angle::operator>(double value) const { return this->value - value > EPS; }
+bool Angle::operator<(double value) const { return this->value - value < -EPS; }
 
 // cast angle to double
 Angle::operator double() const { return this->value; }

@@ -7,22 +7,22 @@ class Angle {
  public:
   Angle();
   Angle(double value);
-  Angle operator+(const double value) const;
-  Angle operator-(const double value) const;
-  Angle& operator+=(const double value);
-  Angle& operator-=(const double value);
+  Angle operator+(double value) const;
+  Angle operator-(double value) const;
+  Angle& operator+=(double value);
+  Angle& operator-=(double value);
 
-  Angle operator*(const double value) const;
-  Angle operator/(const double value) const;
-  Angle& operator*=(const double value);
-  Angle& operator/=(const double value);
-  Angle& operator=(const double value);
+  Angle operator*(double value) const;
+  Angle operator/(double value) const;
+  Angle& operator*=(double value);
+  Angle& operator/=(double value);
+  Angle& operator=(double value);
 
-  bool operator==(const double value) const;
-  bool operator>=(const double value) const;
-  bool operator<=(const double value) const;
-  bool operator>(const double value) const;
-  bool operator<(const double value) const;
+  bool operator==(double value) const;
+  bool operator>=(double value) const;
+  bool operator<=(double value) const;
+  bool operator>(double value) const;
+  bool operator<(double value) const;
 
   static void test_comp_op(Angle& a, Angle& b);
   static void test_op(Angle& a, Angle& b);

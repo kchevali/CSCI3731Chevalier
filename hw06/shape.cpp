@@ -6,15 +6,15 @@
 #include "image.h"
 
 // create shape
-Shape::Shape(const double x, const double y, const int sides,
-             const double length, const Angle& rot) {
+Shape::Shape(double x, double y, const int sides, double length,
+             const Angle& rot) {
   move(x, y, rot);
   this->length = length;
   this->delta = 360.0 / sides;
 }
 
 // set origin and rotation
-void Shape::move(const double x, const double y, const Angle& rot) {
+void Shape::move(double x, double y, const Angle& rot) {
   this->x = x;
   this->y = y;
   this->rot = rot;
