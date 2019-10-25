@@ -1,5 +1,5 @@
 Kevin Chevalier
-HW5 Short Answers
+HW6 Short Answers
 
 1. What is wrong with the following code and how would you fix it?
     #ifndef PROJECTILE_H

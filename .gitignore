@@ -18,3 +18,15 @@ hw04/output.ppm
 hw05/output.jpeg
 
 hw06/output.jpeg
+
+*.cmake
+
+hw07/build/CMakeCache.txt
+
+hw07/build/CMakeFiles/3.15.4/
+
+hw07/build/CMakeFiles/
+
+hw07/build/main.exe_autogen/BPAYK7236M/
+
+hw07/build/main.exe_autogen/

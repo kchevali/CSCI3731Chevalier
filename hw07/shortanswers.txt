@@ -1,0 +1,20 @@
+Kevin Chevalier
+HW7 Short Answers
+
+1. What does the friend keyword do?
+    Allows another class to access the private methods and variables of a class.
+
+2. Why should you never use using namespace std;?
+    This is a bad idea because the namespace prevents name collosions. 'using namespace std;' is not a good idea to use in a header file because then it will be applied to all of the files that use the header file. Therefore, you should never use it for consistency.
+
+3. Why is memory management in C++ hard?
+    First of all, memory management is required since it prevents memory leaks or program crashes. The issue with C++ over C is that objects may copy and keep a reference to your heap data longer then you expect and cause problems. Once an object copies your heap data you lose control to what is done to it.
+
+4. Describe the concept of “ownership”, as it pertains to memory management in C++.
+    The concept of ownership is simply a system to help you manage your heap data safely. It states that only one class can be the owner that is in charge of deleting the data and usually the class that creates the heap data is the owner. This prevents two different classes from deleting the same data or no one deleting it at all.
+
+5. What are the three ways a class can contain objects in C++?
+    A class may contain the actual object which means the memory is located with the new object in a 1 to 1 relationship. Another option is to use a reference, where the new object only points to the actual object with limitations to prevent dangerous behavior. This allows one to many relationships between objects. An example of a limiation would that a reference can only refer to one and only one object. The last way is to use a pointer, which has the most flexibility and is also the most dangerous as a pointer may be null with many other possible problems.
+
+6. What is a forward declaration and why would you use one?
+    A forward declaration is a declaration of a class to another class to allow header files to  compile that refer to each other. This will enable you to use pointers and references of a class in one class and also use pointers/references of the second class in the first class.
