@@ -1,32 +1,24 @@
 
 **/.DS_Store
 
-.DS_Store
-
 *.exe
 
 .vscode/settings.json
 
 *.o
 
-hw02/num.txt
+**/num.txt
 
-hw03/output.ppm
+**/output.ppm
 
-hw04/output.ppm
-
-hw05/output.jpeg
-
-hw06/output.jpeg
+**/output.jpeg
 
 *.cmake
 
-hw07/build/CMakeCache.txt
+**/CMakeCache.txt
 
-hw07/build/CMakeFiles/3.15.4/
+**/CMakeFiles/
 
-hw07/build/CMakeFiles/
+**/main.exe_autogen/
 
-hw07/build/main.exe_autogen/BPAYK7236M/
-
-hw07/build/main.exe_autogen/
+**/build/MakeFile
