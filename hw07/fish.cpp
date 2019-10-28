@@ -4,12 +4,15 @@
 #include <limits>
 #include "population.h"
 
-Fish::Fish(Population& pop) : direction(rand() % 360), turn(5), pop(&pop) {
+Fish::Fish(Population& pop, int x, int y, double direction)
+    : direction(direction == -1 ? rand() % 360 : direction),
+      turn(4),
+      pop(&pop) {
   this->id = -1;
 
   // position
-  this->x = rand() % pop.getWidth();
-  this->y = rand() % pop.getHeight();
+  this->x = x == -1 ? rand() % pop.getWidth() : x;
+  this->y = y == -1 ? rand() % pop.getHeight() : y;
 
   // graphics
   this->width = 100;

@@ -6,6 +6,7 @@ class Fish;
 class Population {
  public:
   Population(const int count, const int width, const int height);
+  void add(int count, int x, int y);
   void add(Fish& Fish);
   void remove(Fish& fish);
   int size() const;

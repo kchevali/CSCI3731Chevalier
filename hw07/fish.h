@@ -5,7 +5,7 @@ class Population;
 
 class Fish {
  public:
-  Fish(Population& pop);
+  Fish(Population& pop, int x, int y, double direction);
   void swim();
   void bound();
   void scan(Population& other);

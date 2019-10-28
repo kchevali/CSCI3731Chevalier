@@ -13,7 +13,13 @@ Population::Population(const int count, const int width, const int height)
   this->height = height;
 
   // create fishes
-  for (int i = 0; i < count; i++) new Fish(*this);
+  for (int i = 0; i < count; i++) new Fish(*this, -1, -1, -1);
+}
+
+void Population::add(int count, int x, int y) {
+  double change = 360.0 / count;
+  for (double angle = 0; angle < 360; angle += change)
+    new Fish(*this, x, y, angle);
 }
 
 // add fish to population
@@ -52,7 +58,7 @@ void Population::remove(Fish& fish) {
   fish.setNext(nullptr);
   fish.setPrev(nullptr);
 
-  --length;
+  if (--length == 0) add(5, fish.getX(), fish.getY());
 }
 
 int Population::size() const { return length; }
