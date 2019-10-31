@@ -1,0 +1,12 @@
+1. What is the “rule of five”?
+    The rule of five is a group of methods required to safely manage heap data from your class. More specifically the rule of five enables the class objects to be properly destroyed, copied and moved without memory leaks or program crashes. The problem comes from the fact that c++ does not automatically copy/handle heap data within an object. The five methods are the destructor, the copy constructor/= overload and the move constructor/= overload.
+2. What is the difference between a copy and a move in C++?
+    A copy is where all of the data of an object is duplicated into another object. A move is where the data is transferred from an object to another and the original object is destroyed.
+3. What is copy elision?
+    The copy elision is a compiler optimization to prevent unnecessary copying. Copy elision is where the return object of a method is created outside the method instead of creating the object in the method and then copying the object when it is returned. Copy elision is not required by c++ standards and it only occurs in some situations.
+4. What is a smart pointer?
+    A smart pointer is a class that wraps an actual pointer. The pointer is the owner of the data that it is pointing to and it determines when the data should be deleted. When all of the objects that share the pointer are done with the data then the smart pointer will delete the data. 
+5. How can you prevent someone from copying a class you wrote?
+    You can prevent copying of a class by overloading the = operator and adding the '= delete' keyword as shown below:
+
+    Thing& Thing::operator=(const Thing& thing) = delete;
