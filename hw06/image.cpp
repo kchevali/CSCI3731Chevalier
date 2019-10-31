@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <tuple>
 #include "jpeglib.h"
 
 // create image and fill
