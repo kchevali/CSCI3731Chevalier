@@ -1,0 +1,30 @@
+1. What is the difference between “downcasting” and “upcasting”?
+    Downcasting is done safely when a superclass pointer is pointing to some subclass object and the pointer is casted back to some subclass. There are many ways of achieving this and the safest method is by using dynamic cast. Upcasting is when a subclass pointer is pointing to some subclass object and the pointer is casted up to a superclass. This can be completed automatically. Note that the term superclass and subclass are relative terms to each other and are not required to directly inherit from each other.
+
+2. Why would you mark a method as virtual? Why wouldn’t you?
+    A method should be marked as virtual if the method is expected to be inherited by a subclass. The virtual mark has a minor performance cost and should only be used when appropriate.
+
+3. What is the difference between a dynamic cast and a static cast? Why would you use one
+over the other?
+    A dynamic cast is the safer operation to cast an object as it checks the validity during runtime. If it detects an invalid cast then it can throw an exception. A static cast is only able to check validity during compile time. This is less safe and may cause dangerous behavior. Generally dynamic cast is better but if the minor performance improvement is significant, especially with complex inheritance structures and if you can absolutely can ensure that the cast is valid then you may use static cast.
+
+4. When might you use a const cast?
+    You might use a const cast if you have a const variable and you want to call a method that accepts a nonconst variable. You must be sure that the method will not modify your variable and should have marked it const from the beginning. There other tricks that use const cast to overload methods for different "const-ness" without rewriting code.
+
+5. Suppose you have a Fruit base class and a Banana subclass. Suppose you have a banana
+declared like this:
+
+    Banana b;
+
+What is the difference between what happens when you pass your banana to a method declared like this:
+
+    void eat(Fruit f);
+    
+vs. one declared like this:
+
+    void eat(const Fruit& f);.
+
+    The first example copies and slices the Banana object to a Fruit. This new object can be modified freely. The second example upcasts a reference of the banana object to a Fruit. Also the reference will not be able to modify the original banana object.
+
+6. What is the difference between how Java and C++ handle multiple inheritance?
+    In Java, a class can only have one superclass, while in C++, a class can have many. Java is able to inherit from many classes with the use of interfaces. C++ inheritance is safe as long as dangerous inheritance trees are avoided such as the Diamond of Death. In general it is better in C++ to only inherit from one class at a time. Overall, Java is more safe, but C++ has more functionality.
