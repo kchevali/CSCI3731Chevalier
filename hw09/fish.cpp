@@ -16,9 +16,8 @@ Fish::Fish(Population& pop)
 
   // mechanics
 
-  this->size = ran(500, 1000);
-  this->feedRadius = 10;
-  this->breedSize = ran(800, 1200);
+  this->size = ran(3000, 5000);
+  this->breedSize = ran(6000, 7500);
 
   // linked list var
   this->next = nullptr;
@@ -30,21 +29,21 @@ Fish::Fish(Population& pop)
   for (int i = 0; i < 4; i++) rotPoints.push_back(new Vector(0, 0));
   updateRotPoints();
 }
-Fish::Fish(Population& pop, int x, int y, int size, int speed, int breedSize)
-    : pos(ran(x - 5, x + 5) % pop.getWidth(),
-          ran(y - 5, y + 5) % pop.getHeight()),
+Fish::Fish(Population& pop, double x, double y, int size, double speed,
+           int breedSize)
+    : pos(ran(x - 100, x + 100) % pop.getWidth(),
+          ran(y - 100, y + 100) % pop.getHeight()),
       vel(this->maxSpeed = std::max(1, ran(speed - 1, speed + 1))),
       acc(),
       pop(&pop) {
   this->id = -1;
   // graphics
-  this->width = 100;
-  this->height = 20;
+  this->width = 20;
+  this->height = 5;
 
   // mechanics
-  this->size = ran(size - 10, size + 10);
-  this->feedRadius = 0;
-  this->breedSize = ran(breedSize - 10, breedSize + 10);
+  this->size = std::max(100, ran(size - 10, size + 10));
+  this->breedSize = ran(breedSize - 500, breedSize + 500);
 
   // linked list var
   this->next = nullptr;
@@ -92,6 +91,7 @@ bool Fish::breed(Fish& mate) {
 // scan population for  fish to eat
 void Fish::feed(Population& other) {
   if (size == 0) return;
+
   Fish* emy = &other.first();
   while (emy != nullptr) {
     this->feed(*emy);
@@ -104,8 +104,8 @@ void Fish::feed(Population& other) {
 void Fish::feed(Fish& emy) {
   if (emy.size == 0) return;
   if (this->size > emy.size && this->isCollide(emy)) {
-    this->size += emy.size / 4;
-    while (this->size > 3000) {
+    this->size += emy.size;
+    while (this->size > 8000) {
       this->breed(*this);
     }
     emy.death();
@@ -114,7 +114,11 @@ void Fish::feed(Fish& emy) {
 
 // shrink fish and return true if alive
 bool Fish::shrink() {
-  bool ans = (size -= 0) > 0;
+  bool ans = (size -= (pop->size() > 50 ? 10 : 1)) > 0;
+  if (!ans && pop->size() == 1) {
+    newFish(10, 5000);
+    newFish(5, 100);
+  }
   return ans;
 }
 
@@ -143,7 +147,7 @@ double Fish::rotY(double dx, double dy) {
 }
 void Fish::setPos(double x, double y) { pos.set(x, y); }
 
-//rot points are points of rectangle if fish is rotated
+// rot points are points of rectangle if fish is rotated
 void Fish::updateRotPoints() {
   rotPoints[0]->set(rotX(0, 0), rotY(0, 0));
   rotPoints[1]->set(rotX(getWidth(), 0), rotY(getWidth(), 0));
@@ -152,10 +156,8 @@ void Fish::updateRotPoints() {
                     rotY(getWidth(), getHeight()));
 }
 
-
 bool Fish::isCollide(Fish& other) {
-
-  //Rot rectangle algorithm
+  // Rot rectangle algorithm
   for (int x = 0; x < 2; x++) {
     std::vector<Vector*>& edges = x == 0 ? this->rotPoints : other.rotPoints;
     for (int i = 0; i < 4; i++) {
@@ -185,9 +187,8 @@ bool Fish::isCollide(Fish& other) {
   return true;
 }
 
-double Fish::getWidth() const { return width * size / 1000.0; }
-double Fish::getHeight() const { return height * size / 1000.0; }
-double Fish::getFeedRadius() const { return feedRadius; }
+double Fish::getWidth() const { return width * size / 5000.0; }
+double Fish::getHeight() const { return height * size / 5000.0; }
 
 Vector& Fish::getPos() { return pos; }
 Vector& Fish::getVel() { return vel; }

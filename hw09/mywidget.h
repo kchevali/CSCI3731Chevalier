@@ -10,8 +10,7 @@ class MyWidget : public QWidget {
  public:
   MyWidget(std::vector<Population *> &pops);
   void updatePopulations();
-    MyWidget& operator=(const MyWidget& thing) = delete;
-
+  MyWidget &operator=(const MyWidget &thing) = delete;
 
  protected:
   void paintEvent(QPaintEvent *event);
@@ -19,7 +18,9 @@ class MyWidget : public QWidget {
 
  private:
   std::vector<Population *> &pops;
+  std::string bestText;
   QTimer *timer;
+  int frame;
 
  public slots:
 };

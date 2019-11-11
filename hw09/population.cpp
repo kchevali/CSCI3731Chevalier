@@ -1,7 +1,11 @@
 #include "population.h"
 #include <QColor>
 #include <cstdlib>
+#include <iostream>
+#include "drunkenfish.h"
 #include "fish.h"
+#include "flippyfish.h"
+#include "smartfish.h"
 
 Population::Population(const int width, const int height)
     : head(nullptr),
@@ -62,7 +66,7 @@ void Population::shrink() {
   }
 }
 
-//update speed and acc of fish
+// update speed and acc of fish
 void Population::update() {
   Fish* curr = head;
   while (curr != nullptr) {
@@ -71,7 +75,7 @@ void Population::update() {
   }
 }
 
-//move fish
+// move fish
 void Population::swim() {
   Fish* curr = head;
   while (curr != nullptr) {
@@ -105,6 +109,36 @@ void Population::feed(Population& other) {
 int Population::getWidth() const { return width; }
 int Population::getHeight() const { return height; }
 QColor& Population::getColor() { return color; }
+
+int Population::getAverageSpeed() const {
+  Fish* curr = head;
+  int tot = 0;
+  while (curr != nullptr) {
+    tot += curr->getVel().getMag();
+    curr = curr->getNext();
+  }
+  return tot / length;
+}
+
+int Population::getAverageBreedSize() const {
+  Fish* curr = head;
+  int tot = 0;
+  while (curr != nullptr) {
+    tot += curr->getBreedSize();
+    curr = curr->getNext();
+  }
+  return tot / length;
+}
+
+int Population::getAveragePerception() const {
+  Fish* curr = head;
+  int tot = 0;
+  while (curr != nullptr) {
+    tot += curr->getPerception();
+    curr = curr->getNext();
+  }
+  return tot / length;
+}
 
 // get fish by index
 Fish& Population::get(const int index) const {

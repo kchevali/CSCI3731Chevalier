@@ -22,9 +22,9 @@ Homework 9
 Inheritance: More fishes!
 
 Simulation Rules
-  *Battle Royale - 3 Classes - 3 Populations - Only 1 will survive
-  *Classes: Flippy, Drunken and Smart
-  *Starting Populations are 100,100,10 respectively for a fair fight
+  *Battle Royale - 3 Classes - 8 Populations - Only 1 will survive
+  *Classes: Flippy(1), Drunken(1) and Smart(5)
+  *Starting Populations are 150 for Flippy and Drunken,and 50 for Smart
   *Scoreboard at the bottom shows the pop sizes respectively
 
   *Each fish has random starting attributes
@@ -34,7 +34,7 @@ Simulation Rules
   *Smart fishes are attracted to smaller fish and run away from bigger fish
   *Smart fishes can only see other fishes within their range of perception
   *Fishes can only eat other fishes within their feeding radius
-  *Every iteration, a fish shrinks in size
+  *Every iteration, a fish shrinks in size - pops larger then 50 shrink faster
   *A fish dies when its eaten or its size is zero
   *When a fish eats it gets bigger
   *A fish can breed if it is big enough and meets a friend
@@ -46,6 +46,8 @@ Simulation Rules
     Pathfinding for fish tracking is significantly improved
     Added breeding
     Added precise collsion detection
+    Show characteristics of the largest population to show change in
+characteristic
 */
 
 int main(int argc, char** argv) {
@@ -53,9 +55,14 @@ int main(int argc, char** argv) {
 
   // define populations
   std::vector<Population*> pops;
-  const int numberOfPopulations = 3;
-  const int popSize = 100;
-  const int smartPopSize = 10;
+  const int numberOfSimplePopulations = 1;
+  const int simplePopSize = 50;
+
+  const int numberOfSmartPopulations = 5;
+  const int smartPopSize = 5;
+
+  const int totalNumberOfPopulations =
+      numberOfSmartPopulations + 2 * numberOfSimplePopulations;
 
   // start application
   QApplication app(argc, argv);
@@ -70,24 +77,26 @@ int main(int argc, char** argv) {
 
   // Create populations
   QSize size = myWidget.size();
-  for (int i = 0; i < numberOfPopulations; i++)
+  for (int i = 0; i < totalNumberOfPopulations; i++)
     pops.push_back(new Population(size.width(), size.height()));
 
-//Create fishies
-  for (int i = 0; i < popSize; i++) {
-    new DrunkenFish(*pops[0]);
-    new FlippyFish(*pops[1]);
+  // Create fishies
+  for (int i = 0; i < simplePopSize; i++) {
+    for (int j = 0; j < numberOfSimplePopulations; j++) {
+      new DrunkenFish(*pops[2 * j]);
+      new FlippyFish(*pops[2 * j + 1]);
+    }
   }
   for (int i = 0; i < smartPopSize; i++) {
-    new SmartFish(*pops[2], pops);
+    for (int j = 0; j < numberOfSmartPopulations; j++)
+      new SmartFish(*pops[j + 2 * numberOfSimplePopulations], pops);
   }
-
-//run
+  // run
   myWidget.show();
   return app.exec();
 }
 
-//constrain value between min and max
+// constrain value between min and max
 double constrain(double x, double min, double max) {
   return std::min(std::max(min, x), max);
 }

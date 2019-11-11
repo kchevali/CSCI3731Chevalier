@@ -7,9 +7,11 @@ class Population;
 class Fish {
  public:
   Fish(Population& pop);
-  Fish(Population& pop, int x, int y, int size, int speed, int breedSize);
+  Fish(Population& pop, double x, double y, int size, double speed,
+       int breedSize);
   void swim();
   void virtual update() = 0;
+  void virtual newFish(int count, int size) const = 0;
   void bound();
   void feed(Population& other);
   void feed(Fish& emy);
@@ -28,11 +30,11 @@ class Fish {
   bool isCollide(Fish& other);
   double getWidth() const;
   double getHeight() const;
-  double getFeedRadius() const;
   Vector& getPos();
   Vector& getVel();
   Vector& getAcc();
   Angle& getDirection();
+  int virtual getPerception() const = 0;
   void death();
   void setPos(double x, double y);
   void setNext(Fish* next);
@@ -49,7 +51,7 @@ class Fish {
 
  protected:
   int id, size, width, height, maxSpeed;
-  double feedRadius, breedSize;
+  double breedSize;
   Vector pos, vel, acc;
   Population* pop;
   Fish *next, *prev, *target;

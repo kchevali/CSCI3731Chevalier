@@ -18,6 +18,9 @@ class Population {
   void feed(Population& other);
   void shrink();
   void breed();
+  int getAverageSpeed() const;
+  int getAverageBreedSize() const;
+  int getAveragePerception() const;
   Fish& get(const int index) const;
   Fish& first() const;
   bool operator==(Population& that) const;
@@ -26,7 +29,7 @@ class Population {
   friend std::ostream& operator<<(std::ostream& out, const Population& c);
 
   virtual ~Population();
-    Population& operator=(const Population& thing) = delete;
+  Population& operator=(const Population& thing) = delete;
 
  private:
   int length, history, width, height;

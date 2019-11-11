@@ -3,14 +3,14 @@
 #include "main.h"
 #include "vector.h"
 
-FlippyFish::FlippyFish(Population& pop, double x, double y, double size,
-                       double speed, double breedSize)
+FlippyFish::FlippyFish(Population& pop, double x, double y, int size,
+                       double speed, int breedSize)
     : Fish(pop, x, y, size, speed, breedSize), turnRate(5) {}
 
 FlippyFish::FlippyFish(Population& pop) : Fish(pop), turnRate(5) {}
 
 void FlippyFish::update() {
-  //move fish randomly by the turn rate
+  // move fish randomly by the turn rate
   int choice = rand() % 3;
   if (choice == 0)
     vel.turn(-turnRate);
@@ -20,8 +20,17 @@ void FlippyFish::update() {
 }
 bool FlippyFish::breed(Fish& mate) {
   if (Fish::breed(mate)) {
-    new FlippyFish(*pop, getX(), getY(), size / 2, vel.getMag(), breedSize);
+    newFish(1, size / 2);
     return true;
   }
   return false;
 }
+void FlippyFish::newFish(int count, int size) const {
+  for (int i = 0; i < count; i++) {
+    new FlippyFish(*pop, getX(), getY(), size, vel.getMag(), breedSize);
+  }
+}
+
+int FlippyFish::getPerception() const { return 0; }
+
+FlippyFish::~FlippyFish() {}
