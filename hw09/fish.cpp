@@ -79,13 +79,12 @@ void Fish::bound() {
     pos.set(x, margin);
 }
 
-bool Fish::breed(Fish& mate) {
+void Fish::breed(Fish& mate) {
   if (this->size >= this->breedSize && mate.size >= mate.breedSize &&
       this->isCollide(mate)) {
     this->size /= 2;
-    return true;
+    newFish(1, size / 2);
   }
-  return false;
 }
 
 // scan population for  fish to eat
@@ -105,7 +104,7 @@ void Fish::feed(Fish& emy) {
   if (emy.size == 0) return;
   if (this->size > emy.size && this->isCollide(emy)) {
     this->size += emy.size;
-    while (this->size > 8000) {
+    if (this->size > 8000) {
       this->breed(*this);
     }
     emy.death();

@@ -17,7 +17,7 @@ class Fish {
   void feed(Fish& emy);
   bool hasPopulation();
   bool shrink();
-  bool virtual breed(Fish& mate);
+  void breed(Fish& mate);
   int getSize() const;
   int getBreedSize() const;
   double getX() const;

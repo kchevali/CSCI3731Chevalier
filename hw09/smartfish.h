@@ -11,7 +11,6 @@ class SmartFish : public Fish {
   void update();
   void attract(Vector& position, bool reverse, double constant);
   bool inRange(Vector& position);
-  bool breed(Fish& mate);
   void newFish(int count, int size) const;
   int getPerception() const;
 

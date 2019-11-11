@@ -18,13 +18,6 @@ void FlippyFish::update() {
     vel.turn(turnRate);
   updateRotPoints();
 }
-bool FlippyFish::breed(Fish& mate) {
-  if (Fish::breed(mate)) {
-    newFish(1, size / 2);
-    return true;
-  }
-  return false;
-}
 void FlippyFish::newFish(int count, int size) const {
   for (int i = 0; i < count; i++) {
     new FlippyFish(*pop, getX(), getY(), size, vel.getMag(), breedSize);

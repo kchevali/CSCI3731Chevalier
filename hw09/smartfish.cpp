@@ -46,14 +46,6 @@ void SmartFish::update() {
   updateRotPoints();
 }
 
-bool SmartFish::breed(Fish& mate) {
-  if (Fish::breed(mate)) {
-    newFish(1, size / 2);
-    return true;
-  }
-  return false;
-}
-
 void SmartFish::newFish(int count, int size) const {
   for (int i = 0; i < count; i++) {
     new SmartFish(*pop, getX(), getY(), size, vel.getMag(), perception,

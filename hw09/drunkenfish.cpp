@@ -20,20 +20,11 @@ void DrunkenFish::update() {
   updateRotPoints();
 }
 
-bool DrunkenFish::breed(Fish& mate) {
-  if (Fish::breed(mate)) {
-    newFish(1, size / 2);
-    return true;
-  }
-  return false;
-}
-
 void DrunkenFish::newFish(int count, int size) const {
   for (int i = 0; i < count; i++) {
     new DrunkenFish(*pop, getX(), getY(), size, vel.getMag(), breedSize);
   }
 }
-
 int DrunkenFish::getPerception() const { return 0; }
 
 DrunkenFish::~DrunkenFish() {}

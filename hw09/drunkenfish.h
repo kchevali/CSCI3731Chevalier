@@ -9,7 +9,6 @@ class DrunkenFish : public Fish {
               int breedSize);
   DrunkenFish(Population& pop);
   void update();
-  bool breed(Fish& mate);
   void newFish(int count, int size) const;
   int getPerception() const;
   friend std::ostream& operator<<(std::ostream& out, const DrunkenFish& c);

@@ -9,7 +9,6 @@ class FlippyFish : public Fish {
              int breedSize);
   FlippyFish(Population& pop);
   void update();
-  bool breed(Fish& mate);
   void newFish(int count, int size) const;
   int getPerception() const;
   friend std::ostream& operator<<(std::ostream& out, const FlippyFish& c);
