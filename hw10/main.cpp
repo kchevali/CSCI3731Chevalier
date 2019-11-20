@@ -56,10 +56,10 @@ int main(int argc, char** argv) {
   // define populations
   std::vector<Population*> pops;
   const int numberOfSimplePopulations = 1;
-  const int simplePopSize = 1;
+  const int simplePopSize = 100;
 
-  const int numberOfSmartPopulations = 1;
-  const int smartPopSize = 100;
+  const int numberOfSmartPopulations = 5;
+  const int smartPopSize = 5;
 
   const int totalNumberOfPopulations =
       numberOfSmartPopulations + 2 * numberOfSimplePopulations;
@@ -77,25 +77,19 @@ int main(int argc, char** argv) {
 
   // Create populations
   QSize size = myWidget.size();
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < totalNumberOfPopulations; i++)
     pops.push_back(new Population(i, size.width(), size.height()));
 
   // Create fishies
-  // for (int i = 0; i < simplePopSize; i++) {
-  //   for (int j = 0; j < numberOfSimplePopulations; j++) {
-  //     new DrunkenFish(*pops[2 * j]);
-  //     new FlippyFish(*pops[2 * j + 1]);
-  //   }
-  // }
-  // for (int i = 0; i < smartPopSize; i++) {
-  //   for (int j = 0; j < numberOfSmartPopulations; j++)
-  //   new SmartFish(*pops[j + 2 * numberOfSimplePopulations], pops);
-  // }
   for (int i = 0; i < simplePopSize; i++) {
-    new SmartFish(*pops[0], pops);
+    for (int j = 0; j < numberOfSimplePopulations; j++) {
+      new DrunkenFish(*pops[2 * j]);
+      new FlippyFish(*pops[2 * j + 1]);
+    }
   }
   for (int i = 0; i < smartPopSize; i++) {
-    new SmartFish(*pops[1], pops);
+    for (int j = 0; j < numberOfSmartPopulations; j++)
+      new SmartFish(*pops[j + 2 * numberOfSimplePopulations], pops);
   }
 
   // run

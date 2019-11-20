@@ -19,8 +19,8 @@ class Population {
   QuadTree& getQuadTree();
   void swim();
   void update();
-  void feed(Population* other, QPainter& painter);
-  void feed(Fish* emy, QPainter& painter);
+  void feed(Population* other);
+  void feed(Fish* emy);
   void shrink();
   void breed();
   int getAverageSpeed();

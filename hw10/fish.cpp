@@ -8,7 +8,7 @@
 
 Fish::Fish(Population& pop)
     : pos(ran(0, pop.getWidth()), ran(0, pop.getHeight())),
-      vel(this->maxSpeed = ran(1,5)),
+      vel(this->maxSpeed = ran(1, 5)),
       acc(),
       pop(pop),
       it(this->pop.add(this)) {
@@ -98,10 +98,10 @@ bool Fish::feed(Fish* emy) {
 
 // shrink fish and return true if alive
 bool Fish::shrink() {
-  bool ans = (size -= (pop.size() > 50 ? 10 : 1)) > 0;
+  bool ans = (size -= (pop.size() > 250 ? 50 : 5)) > 0;
   if (!ans && pop.size() == 1) {
-    newFish(20, 5000);
-    newFish(25, 100);
+    newFish(5, 5000);
+    newFish(10, 100);
   }
   return ans;
 }
@@ -185,20 +185,13 @@ void Fish::death() { size = 0; }
 Population& Fish::getPop() const { return pop; }
 
 void Fish::display(QPainter& painter) {
-  // QPainterPath path;
-  // path.moveTo(rotPoints[0]->getX(), rotPoints[0]->getY());
-  // for (int i = 1; i < 4; i++)
-  //   path.lineTo(rotPoints[i]->getX(), rotPoints[i]->getY());
-  // path.closeSubpath();
-  // painter.drawPath(path);
-  QRect rect = QRect(getX(), getY(), width, height);
+  QRect rect = QRect(getX(), getY(), getWidth(), getHeight());
   QTransform t = QTransform()
                      .translate(getCenterX(), getCenterY())
                      .rotate(getDirection())
                      .translate(-getCenterX(), -getCenterY());
   QPolygon rotatedRect = t.mapToPolygon(rect);
   painter.drawConvexPolygon(rotatedRect);
-  // painter.drawRect(rect);
 }
 
 // comparsion

@@ -9,7 +9,7 @@ class MyWidget : public QWidget {
   Q_OBJECT
  public:
   MyWidget(std::vector<Population *> &pops);
-  void updatePopulations(QPainter& painter);
+  void updatePopulations();
   MyWidget &operator=(const MyWidget &thing) = delete;
 
  protected:
@@ -18,7 +18,7 @@ class MyWidget : public QWidget {
 
  private:
   std::vector<Population *> &pops;
-  std::string bestText,fps;
+  std::string bestText, fps;
   QTimer *timer;
   QTime time;
   int frame;

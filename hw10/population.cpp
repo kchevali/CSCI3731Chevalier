@@ -54,9 +54,9 @@ void Population::swim() {
 void Population::breed() {
   for (auto it = fishes.begin(); it != fishes.end(); it++) {
     Fish* fish = *it;
-    int r = std::max(fish->getWidth(), fish->getHeight()) / 2;
     std::vector<Fish*> result;
-    // quadTree.query(fish->getCenterX(), fish->getCenterY(), r, result);
+    quadTree.query(fish->getCenterX(), fish->getCenterY(),
+                   fish->getPerception(), result);
     for (Fish* other : result) {
       if (fish->getId() > other->getId()) {
         fish->breed(other);
@@ -66,20 +66,16 @@ void Population::breed() {
 }
 
 // scan a population for every fish to eat
-void Population::feed(Population* other, QPainter& painter) {
-  for (auto it = other->begin(); it != other->end(); it++)
-    this->feed(*it, painter);
+void Population::feed(Population* other) {
+  for (auto it = other->begin(); it != other->end(); it++) this->feed(*it);
 }
 
-void Population::feed(Fish* emy, QPainter& painter) {
-  int r = 100;  // std::max(emy->getWidth(), emy->getHeight())/2;
+void Population::feed(Fish* emy) {
   std::vector<Fish*> result;
-  // quadTree.query(emy->getCenterX(), emy->getCenterY(), r, result);
-  painter.drawRect(
-      QRect(emy->getCenterX() - r, emy->getCenterY() - r, 2 * r, 2 * r));
+  quadTree.query(emy->getCenterX(), emy->getCenterY(), emy->getPerception(),
+                 result);
 
   for (Fish* fish : result) {
-    // painter.drawLine(fish->getCenterX(),fish->getCenterY(),emy->getCenterX(),emy->getCenterY());
     if (!fish->feed(emy)) emy->feed(fish);
   }
 }
@@ -112,13 +108,11 @@ int Population::getAveragePerception() {
 }
 
 void Population::display(QPainter& painter) {
-  // painter.setPen(getColor());
+  painter.setPen(getColor());
   for (auto it = fishes.begin(); it != fishes.end(); it++) {
     (*it)->display(painter);
   }
   // quadTree.display(painter);
-
-  // std::cout << "POP: " << count << "\n";
 }
 
 // get fish by index
