@@ -10,12 +10,11 @@ class FlippyFish : public Fish {
   FlippyFish(Population& pop);
   void update();
   void newFish(int count, int size) const;
-  int getPerception() const;
   friend std::ostream& operator<<(std::ostream& out, const FlippyFish& c);
   virtual ~FlippyFish();
 
  protected:
-  Angle turnRate;
+  Angle<double> turnRate;
 };
 
 #endif

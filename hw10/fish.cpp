@@ -8,52 +8,48 @@
 
 Fish::Fish(Population& pop)
     : pos(ran(0, pop.getWidth()), ran(0, pop.getHeight())),
-      vel(this->maxSpeed = ran(1, 5)),
+      vel(this->maxSpeed = ran(2, 4)),
       acc(),
       pop(pop),
+      view(120),
       it(this->pop.add(this)) {
-  // graphics
-  this->width = 20;
-  this->height = 5;
   // mechanics
-  this->perception = 5000;  // ran(10, 20);
+  this->perception = ran(100,101);  // ran(10, 20);
   this->size = ran(3000, 5000);
   this->breedSize = ran(6000, 7500);
-
-  this->id = pop.getNextId();
-
-  for (int i = 0; i < 4; i++) rotPoints.push_back(new Vector(0, 0));
-  updateRotPoints();
+  defaultValues();
 }
 Fish::Fish(Population& pop, double x, double y, int size, double speed,
            int breedSize, int perception)
-    : pos(ran(x - 100, x + 100) % pop.getWidth(),
-          ran(y - 100, y + 100) % pop.getHeight()),
-      vel(this->maxSpeed = std::max(1, ran(speed - 1, speed + 1))),
+    : pos(constrain(ran(x - 100, x + 100), 0, pop.getWidth()),
+          constrain(ran(y - 100, y + 100), 0, pop.getHeight())),
+      vel(this->maxSpeed = constrain(ran(speed - 1, speed + 1), 1, 8)),
       acc(),
       pop(pop),
+      view(120),
       it(this->pop.add(this)) {
-  this->id = -1;
+  // mechanics
+  this->perception = constrain(ran(perception - 5, perception + 5), 10, 150);
+  this->breedSize = ran(breedSize - 500, breedSize + 500);
+  this->size = constrain(ran(size - 10, size + 10), 100, this->breedSize);
+  defaultValues();
+}
+
+void Fish::defaultValues() {
   // graphics
   this->width = 20;
   this->height = 5;
-
-  // mechanics
-  this->perception = std::max(0, ran(perception - 500, perception + 500));
-  this->size = std::max(100, ran(size - 10, size + 10));
-  this->breedSize = ran(breedSize - 500, breedSize + 500);
-
-  this->pop.add(this);
-  this->id = pop.getNextId();
+  this->maxForce = 0.1;
+  this->id = this->pop.getNextId();
   for (int i = 0; i < 4; i++) rotPoints.push_back(new Vector(0, 0));
   updateRotPoints();
 }
+
 void Fish::swim() {
   if (size == 0) return;
   pos += vel;
-  acc *= 0.5;
   vel += acc;
-  vel.limit(maxSpeed);
+  vel.setMag(maxSpeed);
   acc *= 0;
   // move to other side of screen
   bound();
@@ -98,7 +94,7 @@ bool Fish::feed(Fish* emy) {
 
 // shrink fish and return true if alive
 bool Fish::shrink() {
-  bool ans = (size -= (pop.size() > 250 ? 50 : 5)) > 0;
+  bool ans = (size -= (pop.size() > 150 ? 50 : 1)) > 0;
   if (!ans && pop.size() == 1) {
     newFish(5, 5000);
     newFish(10, 100);
@@ -131,6 +127,12 @@ double Fish::rotY(double dx, double dy) {
   //        (pos.getX() + dx) * getDirection().getSin();
 }
 void Fish::setPos(double x, double y) { pos.set(x, y); }
+void Fish::setSize(int size){
+  this->size = size;
+}
+void Fish::setPerception(int p){
+  this->perception = p;
+}
 
 // rot points are points of rectangle if fish is rotated
 void Fish::updateRotPoints() {
@@ -139,6 +141,14 @@ void Fish::updateRotPoints() {
   rotPoints[2]->set(rotX(0, getHeight()), rotY(0, getHeight()));
   rotPoints[3]->set(rotX(getWidth(), getHeight()),
                     rotY(getWidth(), getHeight()));
+}
+
+// attract/repulse self to another fish based on size
+void Fish::attract(Vector& position, bool reverse, double constant) {
+  Vector force = reverse ? this->pos - position : position - this->pos;
+  double dirSq = constrain(force.getMagSq(), 25, 100);
+  force.setMag(constant / dirSq);
+  acc += force;
 }
 
 bool Fish::isCollide(Fish* other) {
@@ -176,10 +186,20 @@ double Fish::getWidth() const { return width * size / 5000.0; }
 double Fish::getHeight() const { return height * size / 5000.0; }
 int Fish::getPerception() const { return perception; }
 
+bool Fish::inView(Vector& point, double distSq){
+  if(distSq > 0 && distSq <= perception*perception){
+    // Vector delta = point - getPos();
+    // Angle<double> diff = delta.getAngle() - getVel().getAngle();
+    // return diff <= view || diff >= 360 - view;
+    return true;
+  }
+  return false;
+}
+
 Vector& Fish::getPos() { return pos; }
 Vector& Fish::getVel() { return vel; }
 Vector& Fish::getAcc() { return acc; }
-Angle& Fish::getDirection() { return vel.getAngle(); }
+Angle<double>& Fish::getDirection() { return vel.getAngle(); }
 
 void Fish::death() { size = 0; }
 Population& Fish::getPop() const { return pop; }

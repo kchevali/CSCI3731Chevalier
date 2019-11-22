@@ -6,7 +6,7 @@
 
 DrunkenFish::DrunkenFish(Population& pop, double x, double y, int size,
                          double speed, int breedSize, int perception)
-    : Fish(pop, x, y, size, speed, breedSize,perception) {}
+    : Fish(pop, x, y, size, speed, breedSize, perception) {}
 
 DrunkenFish::DrunkenFish(Population& pop) : Fish(pop) {
   // pos.set(pop.getWidth() / 2, pop.getHeight() / 2);
@@ -17,12 +17,12 @@ DrunkenFish::DrunkenFish(Population& pop) : Fish(pop) {
 void DrunkenFish::update() {
   // turn 90 to the left, right or go straight
   if (rand() % 20 == 0) vel.turn(rand() % 3 * 90 - 90);
-  updateRotPoints();
 }
 
 void DrunkenFish::newFish(int count, int size) const {
   for (int i = 0; i < count; i++) {
-    new DrunkenFish(pop, getX(), getY(), size, vel.getMag(), breedSize,perception);
+    new DrunkenFish(pop, getX(), getY(), size, vel.getMag(), breedSize,
+                    perception);
   }
 }
 DrunkenFish::~DrunkenFish() {}

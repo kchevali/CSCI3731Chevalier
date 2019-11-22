@@ -1,5 +1,6 @@
 #include "vector.h"
 #include <cmath>
+#include "angle.h"
 
 // create angle
 Vector::Vector() {
@@ -34,7 +35,7 @@ void Vector::updatePolar() {
 
 double Vector::getX() const { return x; }
 double Vector::getY() const { return y; }
-Angle& Vector::getAngle() { return angle; }
+Angle<double>& Vector::getAngle() { return angle; }
 double Vector::getMag() const { return mag; }
 
 double Vector::getMagSq() const { return mag * mag; }
@@ -46,6 +47,11 @@ void Vector::setMag(double mag) {
 
 void Vector::limit(double maxMag) {
   this->mag = std::min(this->mag, maxMag);
+  updateXY();
+}
+
+void Vector::normalize() {
+  this->mag = 1;
   updateXY();
 }
 
@@ -63,6 +69,11 @@ void Vector::set(double x, double y) {
   this->x = x;
   this->y = y;
   updatePolar();
+}
+
+double Vector::distSq(Vector& position) {
+  double dx = x - position.x, dy = y - position.y;
+  return dx * dx + dy * dy;
 }
 
 // basic operators

@@ -19,6 +19,7 @@ class Population {
   QuadTree& getQuadTree();
   void swim();
   void update();
+  void avoid(std::vector<Vector>& points, int r);
   void feed(Population* other);
   void feed(Fish* emy);
   void shrink();
@@ -26,6 +27,7 @@ class Population {
   int getAverageSpeed();
   int getAverageBreedSize();
   int getAveragePerception();
+  Fish* getLargeFish();
   Fish* get(int index);
   Fish* first();
   void display(QPainter& painter);

@@ -11,6 +11,7 @@ class Fish {
   Fish(Population& pop);
   Fish(Population& pop, double x, double y, int size, double speed,
        int breedSize, int perception);
+  void defaultValues();
   void swim();
   void virtual update() = 0;
   void virtual newFish(int count, int size) const = 0;
@@ -19,6 +20,7 @@ class Fish {
   bool hasPopulation();
   bool shrink();
   void breed(Fish* mate);
+  bool inView(Vector& point, double distSq);
   int getId() const;
   int getSize() const;
   int getBreedSize() const;
@@ -29,16 +31,19 @@ class Fish {
   double rotX(double dx, double dy);
   double rotY(double dx, double dy);
   void updateRotPoints();
+  void attract(Vector& position, bool reverse, double constant);
   bool isCollide(Fish* other);
   double getWidth() const;
   double getHeight() const;
   Vector& getPos();
   Vector& getVel();
   Vector& getAcc();
-  Angle& getDirection();
+  Angle<double>& getDirection();
   int getPerception() const;
   void death();
   void setPos(double x, double y);
+  void setSize(int size);
+  void setPerception(int p);
   Population& getPop() const;
   void display(QPainter& painter);
   virtual ~Fish();
@@ -49,8 +54,8 @@ class Fish {
 
  protected:
   int id, size, width, height, maxSpeed, perception;
-  ;
-  double breedSize;
+  double breedSize, maxForce;
+  Angle<double> view;
   Vector pos, vel, acc;
   Population& pop;
   std::list<Fish*>::iterator& it;

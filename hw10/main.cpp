@@ -10,6 +10,7 @@
 #include "drunkenfish.h"
 #include "fish.h"
 #include "flippyfish.h"
+#include "flockyfish.h"
 #include "mywidget.h"
 #include "population.h"
 #include "smartfish.h"
@@ -22,15 +23,19 @@ Homework 9
 Inheritance: More fishes!
 
 Simulation Rules
-  *Battle Royale - 3 Classes - 8 Populations - Only 1 will survive
-  *Classes: Flippy(1), Drunken(1) and Smart(5)
-  *Starting Populations are 150 for Flippy and Drunken,and 50 for Smart
+  *Battle Royale - 4 Classes -
+  *Classes: Flippy, Drunken, Smart, Flocky(Subclass of Smart)
   *Scoreboard at the bottom shows the pop sizes respectively
+  *Left click to see Single View, which highlights the largest fish and his view of other populations with the quad tree
+  *Right click to place a obstacle
 
   *Each fish has random starting attributes
   *A fish's children will have similar attributes
   *Fishes target/eats smaller fishes from different populations
   *Fishs have different movement mechanisms (based on class)
+  *Flocky fishes try to form flocks and tend to stay close as a group
+  *Flocky fish try to stay close, but not too close and have similar alignments
+  *Flocky fish follow the same behavior as Smart fish:
   *Smart fishes are attracted to smaller fish and run away from bigger fish
   *Smart fishes can only see other fishes within their range of perception
   *Fishes can only eat other fishes within their feeding radius
@@ -43,26 +48,32 @@ Simulation Rules
 
 
   Big changes from last time
-    Pathfinding for fish tracking is significantly improved
-    Added breeding
-    Added precise collsion detection
-    Show characteristics of the largest population to show change in
-characteristic
+    Added QuadTree optimization
+    Added Flocky Fish
+    Added Left click (new view)
+    Added Right click (create obstacles)
+
+Debugger: llbd build/main.exe -> run
 */
 
 int main(int argc, char** argv) {
+
   srand(time(NULL));
 
   // define populations
   std::vector<Population*> pops;
-  const int numberOfSimplePopulations = 1;
-  const int simplePopSize = 100;
+  const int numOfSimplePopulations = 1;
+  const int simplePopSize = 50;
 
-  const int numberOfSmartPopulations = 5;
-  const int smartPopSize = 5;
+  const int numOfSmartPopulations = 0;
+  const int smartPopSize = 10;
 
-  const int totalNumberOfPopulations =
-      numberOfSmartPopulations + 2 * numberOfSimplePopulations;
+  const int numOfFlockyPopulations = 8;
+  const int flockyPopSize = 10;
+
+  const int totalNumOfPopulations = numOfSmartPopulations +
+                                    numOfFlockyPopulations +
+                                    2 * numOfSimplePopulations;
 
   // start application
   QApplication app(argc, argv);
@@ -77,24 +88,34 @@ int main(int argc, char** argv) {
 
   // Create populations
   QSize size = myWidget.size();
-  for (int i = 0; i < totalNumberOfPopulations; i++)
+  for (int i = 0; i < totalNumOfPopulations; i++)
     pops.push_back(new Population(i, size.width(), size.height()));
 
   // Create fishies
   for (int i = 0; i < simplePopSize; i++) {
-    for (int j = 0; j < numberOfSimplePopulations; j++) {
+    for (int j = 0; j < numOfSimplePopulations; j++) {
       new DrunkenFish(*pops[2 * j]);
       new FlippyFish(*pops[2 * j + 1]);
     }
   }
+  int start = 2 * numOfSimplePopulations;
   for (int i = 0; i < smartPopSize; i++) {
-    for (int j = 0; j < numberOfSmartPopulations; j++)
-      new SmartFish(*pops[j + 2 * numberOfSimplePopulations], pops);
+    for (int j = 0; j < numOfSmartPopulations; j++)
+      new SmartFish(*pops[j + start], pops);
+  }
+
+  start += numOfSmartPopulations;
+  for (int i = 0; i < flockyPopSize; i++) {
+    for (int j = 0; j < numOfFlockyPopulations; j++) {
+      new FlockyFish(*pops[j + start], pops);
+    }
   }
 
   // run
-  myWidget.show();
-  return app.exec();
+  if (totalNumOfPopulations > 0) {
+    myWidget.show();
+    return app.exec();
+  }
 }
 
 // constrain value between min and max

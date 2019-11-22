@@ -6,6 +6,7 @@
 #include "drunkenfish.h"
 #include "fish.h"
 #include "flippyfish.h"
+#include "flockyfish.h"
 #include "quadtree.h"
 #include "smartfish.h"
 
@@ -39,7 +40,18 @@ void Population::shrink() {
 
 // update speed and acc of fish
 void Population::update() {
-  for (auto it = fishes.begin(); it != fishes.end(); it++) (*it)->update();
+  for (auto it = fishes.begin(); it != fishes.end(); it++) {
+    (*it)->update();
+    (*it)->updateRotPoints();
+  }
+}
+
+void Population::avoid(std::vector<Vector>& points, int r) {
+  for(Vector& point: points){
+      std::vector<Fish*> result;
+    quadTree.query(point.getX(), point.getY(), r, result, nullptr);
+    for (Fish* fish: result) fish->attract(point, true, 50);
+  }
 }
 
 // move fish
@@ -56,7 +68,7 @@ void Population::breed() {
     Fish* fish = *it;
     std::vector<Fish*> result;
     quadTree.query(fish->getCenterX(), fish->getCenterY(),
-                   fish->getPerception(), result);
+                   fish->getPerception(), result, nullptr);
     for (Fish* other : result) {
       if (fish->getId() > other->getId()) {
         fish->breed(other);
@@ -73,7 +85,7 @@ void Population::feed(Population* other) {
 void Population::feed(Fish* emy) {
   std::vector<Fish*> result;
   quadTree.query(emy->getCenterX(), emy->getCenterY(), emy->getPerception(),
-                 result);
+                 result, nullptr);
 
   for (Fish* fish : result) {
     if (!fish->feed(emy)) emy->feed(fish);
@@ -87,28 +99,47 @@ QColor& Population::getColor() { return color; }
 QuadTree& Population::getQuadTree() { return quadTree; }
 
 int Population::getAverageSpeed() {
-  int tot = 0;
+  int tot = 0, count = 0;
   for (auto it = fishes.begin(); it != fishes.end(); it++)
-    tot += (*it)->getVel().getMag();
-  return tot / fishes.size();
+    if ((*it)->getSize() > 0) {
+      tot += (*it)->getVel().getMag();
+      count++;
+    }
+  return tot / count;
 }
 
 int Population::getAverageBreedSize() {
-  int tot = 0;
+  int tot = 0, count = 0;
   for (auto it = fishes.begin(); it != fishes.end(); it++)
-    tot += (*it)->getBreedSize();
-  return tot / fishes.size();
+    if ((*it)->getSize() > 0) {
+      tot += (*it)->getBreedSize();
+      count++;
+    }
+  return tot / count;
 }
 
 int Population::getAveragePerception() {
-  int tot = 0;
+  int tot = 0, count = 0;
   for (auto it = fishes.begin(); it != fishes.end(); it++)
-    tot += (*it)->getPerception();
-  return tot / fishes.size();
+    if ((*it)->getSize() > 0) {
+      tot += (*it)->getPerception();
+      count++;
+    }
+  return tot / count;
+}
+
+Fish* Population::getLargeFish() {
+  Fish* bigBoi = nullptr;
+  int size = 0;
+  for (auto it = fishes.begin(); it != fishes.end(); it++) {
+    Fish* fish = *it;
+    if (fish->getSize() > size) size = (bigBoi = fish)->getSize();
+  }
+  return bigBoi;
 }
 
 void Population::display(QPainter& painter) {
-  painter.setPen(getColor());
+  // painter.setPen(getColor());
   for (auto it = fishes.begin(); it != fishes.end(); it++) {
     (*it)->display(painter);
   }

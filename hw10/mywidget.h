@@ -1,6 +1,7 @@
 #ifndef MYWIDGET_H
 #define MYWIDGET_H
 
+#include <QCheckBox>
 #include <QWidget>
 #include <QtGui>
 #include "population.h"
@@ -13,7 +14,9 @@ class MyWidget : public QWidget {
   MyWidget &operator=(const MyWidget &thing) = delete;
 
  protected:
-  void paintEvent(QPaintEvent *event);
+  void paintEvent(QPaintEvent *event) override;
+  void mousePressEvent(QMouseEvent *event) override;
+  void mouseMoveEvent(QMouseEvent *event) override;
  signals:
 
  private:
@@ -22,6 +25,10 @@ class MyWidget : public QWidget {
   QTimer *timer;
   QTime time;
   int frame;
+  bool isSingleView;
+  Vector mouse;
+  std::vector<Vector> avoidPoints;
+  Angle<double> temp;
 
  public slots:
 };

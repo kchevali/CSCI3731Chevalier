@@ -10,7 +10,8 @@ class QuadTree {
   bool insert(Fish* fish);
   bool contains(double x, double y, double w, double h, Vector& point);
   bool intersect(double x, double y, double r);
-  void query(double x, double y, double r, std::vector<Fish*>& result);
+  void query(double x, double y, double r, std::vector<Fish*>& result,
+             std::vector<QuadTree*>* trees);
   void display(QPainter& painter);
   friend std::ostream& operator<<(std::ostream& out, const QuadTree& c);
   virtual ~QuadTree();

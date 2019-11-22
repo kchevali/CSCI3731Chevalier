@@ -13,14 +13,16 @@ class Vector {
   void updatePolar();
   double getX() const;
   double getY() const;
-  Angle& getAngle();
+  Angle<double>& getAngle();
   double getMag() const;
   double getMagSq() const;
   void limit(double maxMag);
   void set(double x, double y);
   void setMag(double mag);
   void setAngle(double mag);
+  void normalize();
   void turn(double angle);
+  double distSq(Vector& position);
   Vector operator+(const Vector& that) const;
   Vector operator-(const Vector& that) const;
   Vector& operator+=(const Vector& that);
@@ -34,7 +36,7 @@ class Vector {
 
  private:
   double EPS = 10e-6;
-  Angle angle;
+  Angle<double> angle;
   double x, y, mag;
 };
 

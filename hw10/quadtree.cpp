@@ -50,14 +50,17 @@ bool QuadTree::insert(Fish* fish) {
   return true;
 }
 
-void QuadTree::query(double x, double y, double r, std::vector<Fish*>& result) {
+void QuadTree::query(double x, double y, double r, std::vector<Fish*>& result,
+                     std::vector<QuadTree*>* trees) {
   if (!intersect(x, y, r)) return;
+  if (trees != nullptr) trees->push_back(this);
   for (int i = 0; i < length; i++) {
-    if (contains(x, y, r, r, this->fishes[i]->getPos()))
+    if (this->fishes[i]->getSize() > 0 &&
+        contains(x, y, r, r, this->fishes[i]->getPos()))
       result.push_back(this->fishes[i]);
   }
   if (isDivided)
-    for (int i = 0; i < 4; i++) subTrees[i]->query(x, y, r, result);
+    for (int i = 0; i < 4; i++) subTrees[i]->query(x, y, r, result, trees);
 }
 
 void QuadTree::display(QPainter& painter) {

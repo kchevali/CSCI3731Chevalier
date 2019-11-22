@@ -9,6 +9,8 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
 
+SET(CMAKE_CXX_FLAGS  "-g")
+
 find_package(Qt5 COMPONENTS Core REQUIRED)
 get_target_property(QtCore_location Qt5::Core LOCATION)
 
@@ -16,7 +18,6 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 set(SOURCE ../main.cpp
     ../angle.h
-    ../angle.cpp
     ../fish.h
     ../fish.cpp
     ../smartfish.h
@@ -25,6 +26,8 @@ set(SOURCE ../main.cpp
     ../drunkenfish.cpp
     ../flippyfish.h
     ../flippyfish.cpp
+    ../flockyfish.h
+    ../flockyfish.cpp
     ../population.h
     ../population.cpp
     ../mywidget.h

@@ -10,7 +10,6 @@ class DrunkenFish : public Fish {
   DrunkenFish(Population& pop);
   void update();
   void newFish(int count, int size) const;
-  int getPerception() const;
   friend std::ostream& operator<<(std::ostream& out, const DrunkenFish& c);
   virtual ~DrunkenFish();
 };
