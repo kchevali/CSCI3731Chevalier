@@ -30,7 +30,7 @@ Fish::Fish(Population& pop, double x, double y, int size, double speed,
       it(this->pop.add(this)) {
   // mechanics
   this->perception = constrain(ran(perception - 5, perception + 5), 10, 150);
-  this->breedSize = ran(breedSize - 500, breedSize + 500);
+  this->breedSize = constrain(ran(breedSize - 100, breedSize + 100),10,8000);
   this->size = constrain(ran(size - 10, size + 10), 100, this->breedSize);
   defaultValues();
 }
