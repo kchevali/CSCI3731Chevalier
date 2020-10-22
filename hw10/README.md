@@ -1,7 +1,7 @@
 # FISHY FISH
 
 ## DEMO
-![demo](/assets/fishyfish.gif)
+![demo](./assets/fishyfish.gif)
 
 ### In Short
 Fish ecosystem simulator with QT GUI in C++.
